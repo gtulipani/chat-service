@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ public class HealthControllerImpl implements HealthController {
 	}
 
 	@Override
-	@RequestMapping(value = "/check", method = {RequestMethod.POST})
+	@RequestMapping(value = "/check", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, String> check() {
 		if (this.jdbcTemplate.queryForObject("SELECT 1", Integer.class) != 1) {
 			throw new RuntimeException("Unexpected query result");

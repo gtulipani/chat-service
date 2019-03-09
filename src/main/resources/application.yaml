@@ -1,6 +1,23 @@
+server:
+  port: 8080
+
 spring:
   datasource:
-    url: jdbc:sqlite:challenge.db
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chat_service?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    max-active: 20
+    max-idle: 20
+    test-while-idle: true
+    test-on-borrow: true
+    validation-query: SELECT 1
+    time-between-eviction-runs-millis: 5000
+    min-evictable-idle-time-millis: 60000
+  flyway:
+    enabled: true
+    clean-disabled: true
+    clean-on-validation-error: false
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -10,3 +27,15 @@ spring:
 encryption:
   key: 9MDJZy0kgctfIuBP
   initVector: DmSiQBV2HFibxReH
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,info,loggers,metrics
+      path-mapping:
+        loggers: api/v1/admin/loggers

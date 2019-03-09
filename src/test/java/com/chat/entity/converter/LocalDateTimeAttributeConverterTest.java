@@ -1,4 +1,4 @@
-package com.chat.entity;
+package com.chat.entity.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,8 @@ import java.time.temporal.ChronoField;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.chat.entity.converter.LocalDateTimeAttributeConverter;
 
 public class LocalDateTimeAttributeConverterTest {
 	private LocalDateTimeAttributeConverter localDateTimeAttributeConverter;

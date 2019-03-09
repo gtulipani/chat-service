@@ -1,4 +1,4 @@
-package com.chat.entity;
+package com.chat.entity.converter;
 
 import java.util.Objects;
 

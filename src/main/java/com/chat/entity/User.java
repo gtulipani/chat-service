@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.chat.entity.converter.SensitiveFieldConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +31,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Data
 @Builder
 @Table(name = "users")
-@JsonIgnoreProperties(value = {"id"})
 public class User implements Serializable {
 	private static final long serialVersionUID = -6507963547063710509L;
 

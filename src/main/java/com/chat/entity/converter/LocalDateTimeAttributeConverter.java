@@ -1,4 +1,4 @@
-package com.chat.entity;
+package com.chat.entity.converter;
 
 import static com.chat.entity.utils.DateUtils.toLocalDateTime;
 import static com.chat.entity.utils.DateUtils.toTimestamp;
