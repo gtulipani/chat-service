@@ -11,9 +11,11 @@ public class UserMother {
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 
-	public static User aUser() {
+	/**
+	 * Creates a basic {@link User} with all fields set except from {@link User#id} which remains null
+	 */
+	public static User aUserWithoutId() {
 		return User.builder()
-				.id(1L)
 				.createdOn(CREATED_ON)
 				.lastModified(LAST_MODIFIED)
 				.username(USERNAME)
@@ -21,6 +23,19 @@ public class UserMother {
 				.build();
 	}
 
+	/**
+	 * Creates a basic {@link User} with all fields set
+	 */
+	public static User aUser() {
+		User user = aUserWithoutId();
+		user.setId(1L);
+		return user;
+	}
+
+	/**
+	 * Creates a basic {@link UserCreationResponseEntity} using the {@link User} created with {@link #aUser()} as
+	 * reference
+	 */
 	public static UserCreationResponseEntity aUserCreationResponseEntity() {
 		return UserCreationResponseEntity.builder()
 				.id(aUser().getId())

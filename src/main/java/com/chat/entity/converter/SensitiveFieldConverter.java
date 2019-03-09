@@ -8,6 +8,8 @@ import javax.persistence.Converter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.chat.security.EncryptionService;
@@ -19,11 +21,11 @@ public class SensitiveFieldConverter implements AttributeConverter<String, Strin
 	private static final String MASK_PATTERN = "(?<=.{4})(.*)$";
 	private static final String MASK = "***";
 
-	private EncryptionService encryptionService;
+	private static EncryptionService encryptionService;
 
 	@Autowired
 	public void init(EncryptionService encryptionService) {
-		this.encryptionService = encryptionService;
+		SensitiveFieldConverter.encryptionService = encryptionService;
 	}
 
 	@Override

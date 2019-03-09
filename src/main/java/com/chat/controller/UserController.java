@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.chat.entity.User;
 
-public interface UsersController {
+public interface UserController {
 	Callable<ResponseEntity> createUser(@RequestBody User user);
 }

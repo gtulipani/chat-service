@@ -39,3 +39,7 @@ management:
         include: health,info,loggers,metrics
       path-mapping:
         loggers: api/v1/admin/loggers
+
+logging:
+  level:
+    ROOT: INFO
