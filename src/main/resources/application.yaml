@@ -1,3 +1,7 @@
 spring:
   datasource:
     url: jdbc:sqlite:challenge.db
+
+encryption:
+  key: 9MDJZy0kgctfIuBP
+  initVector: DmSiQBV2HFibxReH
