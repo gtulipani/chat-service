@@ -1,6 +1,11 @@
 spring:
   datasource:
     url: jdbc:sqlite:challenge.db
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
 
 encryption:
   key: 9MDJZy0kgctfIuBP

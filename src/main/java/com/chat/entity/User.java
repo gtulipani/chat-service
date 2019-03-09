@@ -20,6 +20,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -34,7 +36,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = -6507963547063710509L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
 	private Long id;
 
 	@Column(name = "created_on", nullable = false)
@@ -45,12 +48,12 @@ public class User implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy hh:mm:ss")
 	private LocalDateTime lastModified;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "username", nullable = false)
 	@NotNull
 	@NotEmpty
 	private String username;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "password", nullable = false)
 	@NotNull
 	@NotEmpty
 	@Convert(converter = SensitiveFieldConverter.class)
