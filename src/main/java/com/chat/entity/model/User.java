@@ -1,4 +1,4 @@
-package com.chat.entity;
+package com.chat.entity.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,13 +47,11 @@ public class User implements Serializable {
 	private LocalDateTime lastModified;
 
 	@Column(name = "username", nullable = false)
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String username;
 
 	@Column(name = "password", nullable = false)
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	@Convert(converter = SensitiveFieldConverter.class)
 	private String password;
 

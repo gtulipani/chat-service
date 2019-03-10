@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chat.entity.User;
+import com.chat.entity.model.User;
 import com.chat.service.UserService;
 
 @Slf4j
@@ -26,6 +26,7 @@ public class UserControllerImpl implements UserController {
 		this.userService = userService;
 	}
 
+	@Override
 	@RequestMapping(method = RequestMethod.POST)
 	public Callable<ResponseEntity> createUser(@RequestBody User user) {
 		return () -> {

@@ -2,8 +2,8 @@ package com.chat.service.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.chat.entity.User;
-import com.chat.entity.UserCreationResponseEntity;
+import com.chat.entity.model.User;
+import com.chat.entity.model.UserCreationResponseEntity;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 

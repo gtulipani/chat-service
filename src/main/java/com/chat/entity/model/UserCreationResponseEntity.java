@@ -1,4 +1,4 @@
-package com.chat.entity;
+package com.chat.entity.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

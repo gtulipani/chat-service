@@ -3,8 +3,8 @@ package com.chat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.chat.entity.User;
-import com.chat.entity.UserCreationResponseEntity;
+import com.chat.entity.model.User;
+import com.chat.entity.model.UserCreationResponseEntity;
 import com.chat.repository.UserRepository;
 import com.chat.service.mapper.UserMapper;
 

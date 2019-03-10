@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chat.entity.User;
-import com.chat.entity.UserCreationResponseEntity;
+import com.chat.entity.model.User;
+import com.chat.entity.model.UserCreationResponseEntity;
 import com.chat.service.UserService;
 
 public class UserControllerImplTest {

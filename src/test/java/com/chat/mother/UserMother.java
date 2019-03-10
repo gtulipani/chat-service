@@ -2,8 +2,8 @@ package com.chat.mother;
 
 import java.time.LocalDateTime;
 
-import com.chat.entity.User;
-import com.chat.entity.UserCreationResponseEntity;
+import com.chat.entity.model.User;
+import com.chat.entity.model.UserCreationResponseEntity;
 
 public class UserMother {
 	private static final LocalDateTime CREATED_ON = LocalDateTime.now();
@@ -29,6 +29,15 @@ public class UserMother {
 	public static User aUser() {
 		User user = aUserWithoutId();
 		user.setId(1L);
+		return user;
+	}
+
+	/**
+	 * Creates a basic {@link User} but with different ID than {@link #aUser()}
+	 */
+	public static User aDifferentUser() {
+		User user = aUserWithoutId();
+		user.setId(2L);
 		return user;
 	}
 

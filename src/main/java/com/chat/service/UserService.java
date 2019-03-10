@@ -1,7 +1,7 @@
 package com.chat.service;
 
-import com.chat.entity.User;
-import com.chat.entity.UserCreationResponseEntity;
+import com.chat.entity.model.User;
+import com.chat.entity.model.UserCreationResponseEntity;
 
 public interface UserService {
 	UserCreationResponseEntity createUser(User user);
