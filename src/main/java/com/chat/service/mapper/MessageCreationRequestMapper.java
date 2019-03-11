@@ -7,25 +7,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.chat.entity.model.User;
 import com.chat.entity.model.message.Message;
+import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.content.MessageContent;
 import com.chat.entity.model.message.content.MessageContentFactory;
-import com.chat.entity.model.message.MessageCreationRequest;
-import com.chat.entity.model.User;
 import com.chat.exception.CustomerMapperException;
-import com.chat.exception.UserNotFoundException;
-import com.chat.repository.UserRepository;
+import com.chat.service.UserService;
 import ma.glasnost.orika.MappingContext;
 
 @Slf4j
 @Component
 public class MessageCreationRequestMapper extends CustomMapperStrategy<MessageCreationRequest, Message> {
-	private final UserRepository userRepository;
+	private final UserService userService;
 	private final MessageContentFactory messageContentFactory;
 
 	@Autowired
-	public MessageCreationRequestMapper(UserRepository userRepository, MessageContentFactory messageContentFactory) {
-		this.userRepository = userRepository;
+	public MessageCreationRequestMapper(UserService userService, MessageContentFactory messageContentFactory) {
+		this.userService = userService;
 		this.messageContentFactory = messageContentFactory;
 	}
 
@@ -66,6 +65,6 @@ public class MessageCreationRequestMapper extends CustomMapperStrategy<MessageCr
 	 * Fetches a user from the repository and returns it, or throws an exception if can't be found
 	 */
 	private User getUser(Long id) {
-		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+		return userService.getUserById(id);
 	}
 }

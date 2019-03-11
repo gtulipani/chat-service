@@ -10,12 +10,13 @@ import org.testng.annotations.Test;
 import com.chat.entity.model.message.content.MessageContentFactory;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.repository.UserRepository;
+import com.chat.service.UserService;
 
 public class MessageCreationRequestMapperTest {
 	private MessageCreationRequestMapper messageCreationRequestMapper;
 
 	@Mock
-	private UserRepository userRepository;
+	private UserService userService;
 	@Mock
 	private MessageContentFactory messageContentFactory;
 
@@ -23,7 +24,7 @@ public class MessageCreationRequestMapperTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 
-		messageCreationRequestMapper = new MessageCreationRequestMapper(userRepository, messageContentFactory);
+		messageCreationRequestMapper = new MessageCreationRequestMapper(userService, messageContentFactory);
 	}
 
 	@Test

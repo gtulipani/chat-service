@@ -1,15 +1,15 @@
 package com.chat.service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.chat.entity.model.User;
 import com.chat.entity.model.message.Message;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.MessageCreationResponse;
@@ -23,11 +23,13 @@ import com.chat.service.mapper.MessageMapper;
 public class MessageServiceImpl implements MessageService {
 	private final MessageRepository messageRepository;
 	private final MessageMapper messageMapper;
+	private final UserService userService;
 
 	@Autowired
-	public MessageServiceImpl(MessageRepository messageRepository, MessageMapper messageMapper) {
+	public MessageServiceImpl(MessageRepository messageRepository, MessageMapper messageMapper, UserService userService) {
 		this.messageRepository = messageRepository;
 		this.messageMapper = messageMapper;
+		this.userService = userService;
 	}
 
 	@Override
@@ -42,12 +44,15 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	@Transactional
 	public MessagesResponse getMessages(Long recipient, Long start, Long limit) {
-		Long messageIdStart = messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipient, start)
+		User recipientUser = userService.getUserById(recipient);
+		Long messageIdStart = messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipientUser, start, PageRequest.of(0, 1)).getContent()
+				.stream()
 				.map(Message::getId)
+				.findFirst()
 				.orElse(start);
 
 		MessagesResponse messagesResponse = MessagesResponse.builder()
-				.messages(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipient, messageIdStart, limit)
+				.messages(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipientUser, messageIdStart, PageRequest.of(0, Math.toIntExact(limit))).getContent()
 						.stream()
 						.map(message -> messageMapper.map(message, MessageResponse.class))
 						.collect(Collectors.toList()))

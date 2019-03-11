@@ -9,12 +9,10 @@ import javax.persistence.Converter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.chat.entity.model.message.content.MessageContent;
 import com.chat.entity.model.message.content.MessageContentFactory;
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,20 +20,16 @@ import com.google.gson.reflect.TypeToken;
 @Component
 @Converter
 public class MessageContentConverter implements AttributeConverter<MessageContent, String> {
-	private static String typeKey;
 	private static MessageContentFactory messageContentFactory;
 
 	@Autowired
-	public void init(@Value("${message.content.typeKey}") String typeKey, MessageContentFactory messageContentFactory) {
-		MessageContentConverter.typeKey = typeKey;
+	public void init(MessageContentFactory messageContentFactory) {
 		MessageContentConverter.messageContentFactory = messageContentFactory;
 	}
 
 	@Override
 	public String convertToDatabaseColumn(MessageContent messageContent) {
-		Map<String, String> messageContentMap = Maps.newHashMap();
-		messageContentMap.putAll(messageContent.getContent());
-		messageContentMap.put(typeKey, messageContent.getMessageContentType().getDisplayValue());
+		Map<String, String> messageContentMap = messageContentFactory.getMessageContentAsMap(messageContent);
 
 		return new Gson().toJson(messageContentMap);
 	}

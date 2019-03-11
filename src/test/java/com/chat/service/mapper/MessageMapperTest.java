@@ -1,6 +1,10 @@
 package com.chat.service.mapper;
 
+import static com.chat.mother.MessageMother.aCompleteImageMessageResponse;
+import static com.chat.mother.MessageMother.aCompleteTextMessageResponse;
+import static com.chat.mother.MessageMother.aCompleteVideoMessageResponse;
 import static com.chat.mother.MessageMother.aImageMessageCreationRequest;
+import static com.chat.mother.MessageMother.aMessageCreationResponseEntity;
 import static com.chat.mother.MessageMother.aTextMessageCreationRequest;
 import static com.chat.mother.MessageMother.aVideoMessageCreationRequest;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -21,6 +25,7 @@ import org.testng.annotations.Test;
 import com.chat.entity.model.message.Message;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.MessageCreationResponse;
+import com.chat.entity.model.message.MessageResponse;
 import com.chat.exception.CustomerMapperException;
 import ma.glasnost.orika.MappingContext;
 
@@ -37,6 +42,7 @@ public class MessageMapperTest {
 
 		when(customMapperStrategy.supports(MessageCreationRequest.class)).thenReturn(true);
 		when(customMapperStrategy.supports(MessageCreationResponse.class)).thenReturn(true);
+		when(customMapperStrategy.supports(MessageResponse.class)).thenReturn(true);
 		customMappers = Lists.newArrayList(customMapperStrategy);
 		messageMapper = new MessageMapper(customMappers);
 	}
@@ -48,7 +54,7 @@ public class MessageMapperTest {
 
 		assertThatExceptionOfType(CustomerMapperException.class)
 				.isThrownBy(() -> new MessageMapper(customMappers))
-				.withMessage("Could not find any custom mapper to convert to MessageCreationRequest");
+				.withMessage("Could not find any custom mapper to convert to %s", MessageCreationRequest.class);
 	}
 
 	@Test
@@ -76,5 +82,41 @@ public class MessageMapperTest {
 		messageMapper.map(messageCreationRequest, Message.class);
 
 		verify(customMapperStrategy, times(1)).mapAtoB(eq(messageCreationRequest), any(Message.class), any(MappingContext.class));
+	}
+
+	@Test
+	public void testMapMessageCreationResponse() {
+		MessageCreationResponse messageCreationResponse = aMessageCreationResponseEntity();
+
+		messageMapper.map(messageCreationResponse, Message.class);
+
+		verify(customMapperStrategy, times(1)).mapAtoB(eq(messageCreationResponse), any(Message.class), any(MappingContext.class));
+	}
+
+	@Test
+	public void testMapMessageResponseText() {
+		MessageResponse messageResponse = aCompleteTextMessageResponse();
+
+		messageMapper.map(messageResponse, Message.class);
+
+		verify(customMapperStrategy, times(1)).mapAtoB(eq(messageResponse), any(Message.class), any(MappingContext.class));
+	}
+
+	@Test
+	public void testMapMessageResponseImage() {
+		MessageResponse messageResponse = aCompleteImageMessageResponse();
+
+		messageMapper.map(messageResponse, Message.class);
+
+		verify(customMapperStrategy, times(1)).mapAtoB(eq(messageResponse), any(Message.class), any(MappingContext.class));
+	}
+
+	@Test
+	public void testMapMessageResponseVideo() {
+		MessageResponse messageResponse = aCompleteVideoMessageResponse();
+
+		messageMapper.map(messageResponse, Message.class);
+
+		verify(customMapperStrategy, times(1)).mapAtoB(eq(messageResponse), any(Message.class), any(MappingContext.class));
 	}
 }

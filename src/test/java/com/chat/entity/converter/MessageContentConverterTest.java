@@ -25,8 +25,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class MessageContentConverterTest {
-	private static final String TYPE_KEY = "type";
-
 	private MessageContentConverter messageContentConverter;
 
 	@Mock
@@ -37,7 +35,7 @@ public class MessageContentConverterTest {
 		MockitoAnnotations.initMocks(this);
 
 		messageContentConverter = new MessageContentConverter();
-		messageContentConverter.init(TYPE_KEY, messageContentFactory);
+		messageContentConverter.init(messageContentFactory);
 	}
 
 	@Test
@@ -45,6 +43,7 @@ public class MessageContentConverterTest {
 		MessageContent messageContent = aTextMessageContent();
 		Map<String, String> messageContentMapped = aTextMessageContentAsMap();
 		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+		when(messageContentFactory.getMessageContentAsMap(messageContent)).thenReturn(messageContentMapped);
 
 		String result = messageContentConverter.convertToDatabaseColumn(messageContent);
 
@@ -57,6 +56,7 @@ public class MessageContentConverterTest {
 		MessageContent messageContent = aImageMessageContent();
 		Map<String, String> messageContentMapped = aImageMessageContentAsMap();
 		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+		when(messageContentFactory.getMessageContentAsMap(messageContent)).thenReturn(messageContentMapped);
 
 		String result = messageContentConverter.convertToDatabaseColumn(messageContent);
 
@@ -69,6 +69,7 @@ public class MessageContentConverterTest {
 		MessageContent messageContent = aVideoMessageContent();
 		Map<String, String> messageContentMapped = aVideoMessageContentAsMap();
 		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+		when(messageContentFactory.getMessageContentAsMap(messageContent)).thenReturn(messageContentMapped);
 
 		String result = messageContentConverter.convertToDatabaseColumn(messageContent);
 

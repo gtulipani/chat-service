@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 @Component
 public class MessageContentFactory {
@@ -88,6 +89,16 @@ public class MessageContentFactory {
 
 		// Call proper builder
 		return contentBuildersByMap.get(messageContentType).apply(map);
+	}
+
+	/**
+	 * Gets a MessageContent but serialized as {@link Map} among with the proper {@link MessageContent#messageContentType}
+	 */
+	public Map<String, String> getMessageContentAsMap(MessageContent messageContent) {
+		Map<String, String> messageContentMap = Maps.newHashMap();
+		messageContentMap.putAll(messageContent.getContent());
+		messageContentMap.put(typeKey, messageContent.getMessageContentType().getDisplayValue());
+		return messageContentMap;
 	}
 
 	/**

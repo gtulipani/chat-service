@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.chat.entity.model.User;
 import com.chat.entity.model.UserCreationResponseEntity;
+import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
 import com.chat.service.mapper.UserMapper;
 
@@ -22,5 +23,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserCreationResponseEntity createUser(User user) {
 		return userMapper.map(userRepository.save(user), UserCreationResponseEntity.class);
+	}
+
+	@Override
+	public User getUserById(Long id) {
+		return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	}
 }

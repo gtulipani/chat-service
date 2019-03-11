@@ -5,4 +5,6 @@ import com.chat.entity.model.UserCreationResponseEntity;
 
 public interface UserService {
 	UserCreationResponseEntity createUser(User user);
+
+	User getUserById(Long id);
 }

@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.entry;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -229,5 +230,38 @@ public class MessageContentFactoryTest {
 		assertThatIllegalArgumentException()
 				.isThrownBy(() -> messageContentFactory.getMessageContent(map))
 				.withMessage("Couldn't find key=%s as part of the map", VIDEO_MESSAGE_CONTENT_URL_KEY);
+	}
+
+	@Test
+	public void testGetMessageContentAsMapText() {
+		MessageContent messageContent = aTextMessageContent();
+		Map<String, String> messageContentMapped = aTextMessageContentAsMap();
+		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+
+		Map<String, String> mappedResult = messageContentFactory.getMessageContentAsMap(messageContent);
+
+		entries.forEach(e -> assertThat(mappedResult).contains(e));
+	}
+
+	@Test
+	public void testGetMessageContentAsMapImage() {
+		MessageContent messageContent = aImageMessageContent();
+		Map<String, String> messageContentMapped = aImageMessageContentAsMap();
+		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+
+		Map<String, String> mappedResult = messageContentFactory.getMessageContentAsMap(messageContent);
+
+		entries.forEach(e -> assertThat(mappedResult).contains(e));
+	}
+
+	@Test
+	public void testGetMessageContentAsMapVideo() {
+		MessageContent messageContent = aVideoMessageContent();
+		Map<String, String> messageContentMapped = aVideoMessageContentAsMap();
+		List<Map.Entry<String, String>> entries = new ArrayList<>(messageContentMapped.entrySet());
+
+		Map<String, String> mappedResult = messageContentFactory.getMessageContentAsMap(messageContent);
+
+		entries.forEach(e -> assertThat(mappedResult).contains(e));
 	}
 }
