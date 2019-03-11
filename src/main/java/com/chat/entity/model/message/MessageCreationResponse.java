@@ -1,4 +1,4 @@
-package com.chat.entity.model;
+package com.chat.entity.model.message;
 
 import java.sql.Timestamp;
 
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class MessageCreationResponseEntity {
+public class MessageCreationResponse {
 	private Long id;
 	private Timestamp timestamp;
 }

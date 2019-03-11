@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chat.entity.model.MessageCreationRequest;
-import com.chat.entity.model.MessageCreationResponseEntity;
+import com.chat.entity.model.message.MessageCreationRequest;
+import com.chat.entity.model.message.MessageCreationResponse;
 import com.chat.service.MessageService;
 
 public class MessageControllerImplTest {
@@ -32,12 +32,12 @@ public class MessageControllerImplTest {
 	@Test
 	public void testCreateMessage() throws Exception {
 		MessageCreationRequest messageCreationRequest = aMessageCreationRequestWithEmptyContent();
-		MessageCreationResponseEntity messageCreationResponseEntity = aMessageCreationResponseEntity();
-		when(messageService.createMessage(messageCreationRequest)).thenReturn(messageCreationResponseEntity);
+		MessageCreationResponse messageCreationResponse = aMessageCreationResponseEntity();
+		when(messageService.createMessage(messageCreationRequest)).thenReturn(messageCreationResponse);
 
 		ResponseEntity responseEntity = messageController.createMessage(messageCreationRequest).call();
 
 		assertThat(responseEntity.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
-		assertThat(responseEntity.getBody()).isEqualTo(messageCreationResponseEntity);
+		assertThat(responseEntity.getBody()).isEqualTo(messageCreationResponse);
 	}
 }

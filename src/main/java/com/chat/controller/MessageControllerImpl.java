@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chat.entity.model.MessageCreationRequest;
+import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.service.MessageService;
 
 @Slf4j

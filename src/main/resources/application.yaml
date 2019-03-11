@@ -43,3 +43,16 @@ management:
 logging:
   level:
     ROOT: INFO
+
+message:
+  content:
+    typeKey: type
+    text:
+      textKey: text
+    image:
+      urlKey: url
+      heightKey: height
+      widthKey: width
+    video:
+      urlKey: url
+      sourceKey: source

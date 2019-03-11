@@ -1,8 +1,8 @@
 package com.chat.service;
 
-import com.chat.entity.model.MessageCreationRequest;
-import com.chat.entity.model.MessageCreationResponseEntity;
+import com.chat.entity.model.message.MessageCreationRequest;
+import com.chat.entity.model.message.MessageCreationResponse;
 
 public interface MessageService {
-	MessageCreationResponseEntity createMessage(MessageCreationRequest messageCreationRequest);
+	MessageCreationResponse createMessage(MessageCreationRequest messageCreationRequest);
 }

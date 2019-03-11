@@ -1,4 +1,4 @@
-package com.chat.entity.model;
+package com.chat.entity.model.message;
 
 import java.util.Map;
 
