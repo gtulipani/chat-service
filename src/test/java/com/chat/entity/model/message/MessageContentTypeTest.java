@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.testng.annotations.Test;
 
+import com.chat.entity.model.message.content.MessageContentType;
+
 public class MessageContentTypeTest {
 	@Test
 	public void testOfDisplayName_text() {

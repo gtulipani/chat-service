@@ -7,5 +7,5 @@ import com.chat.entity.model.message.MessagesResponse;
 public interface MessageService {
 	MessageCreationResponse createMessage(MessageCreationRequest messageCreationRequest);
 
-	MessagesResponse getMessages(Integer recipient, Integer start, Integer limit);
+	MessagesResponse getMessages(Long recipient, Long start, Long limit);
 }

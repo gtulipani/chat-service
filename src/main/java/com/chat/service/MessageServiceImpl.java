@@ -1,5 +1,9 @@
 package com.chat.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.chat.entity.model.message.Message;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.MessageCreationResponse;
+import com.chat.entity.model.message.MessageResponse;
 import com.chat.entity.model.message.MessagesResponse;
 import com.chat.repository.MessageRepository;
 import com.chat.service.mapper.MessageMapper;
@@ -35,7 +40,20 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public MessagesResponse getMessages(Integer recipient, Integer start, Integer limit) {
-		return null;
+	@Transactional
+	public MessagesResponse getMessages(Long recipient, Long start, Long limit) {
+		Long messageIdStart = messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipient, start)
+				.map(Message::getId)
+				.orElse(start);
+
+		MessagesResponse messagesResponse = MessagesResponse.builder()
+				.messages(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipient, messageIdStart, limit)
+						.stream()
+						.map(message -> messageMapper.map(message, MessageResponse.class))
+						.collect(Collectors.toList()))
+				.build();
+
+		log.info("Successfully fetched messages for recipient={}, start={}, limit={}", recipient, start, limit);
+		return messagesResponse;
 	}
 }

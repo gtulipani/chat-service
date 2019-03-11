@@ -1,4 +1,4 @@
-package com.chat.entity.model.message;
+package com.chat.entity.model.message.content;
 
 import java.io.Serializable;
 import java.util.Map;

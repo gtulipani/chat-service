@@ -35,6 +35,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.collections.Maps;
 
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.MessageContentFactory;
+import com.chat.entity.model.message.content.MessageContentType;
+
 public class MessageContentFactoryTest {
 	private static final String INVALID_PARAMS_QUANTITY_ERROR = "Invalid quantity of params for building a MessageContent of type=%s";
 

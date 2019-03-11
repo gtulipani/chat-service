@@ -20,11 +20,14 @@ import org.testng.collections.Maps;
 
 import com.chat.entity.model.User;
 import com.chat.entity.model.message.Message;
-import com.chat.entity.model.message.MessageContent;
+import com.chat.entity.model.message.content.MessageContent;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.MessageCreationResponse;
 import com.chat.entity.model.message.MessageResponse;
 import com.chat.entity.model.message.MessagesResponse;
+import com.chat.entity.model.message.content.ImageMessageContent;
+import com.chat.entity.model.message.content.TextMessageContent;
+import com.chat.entity.model.message.content.VideoMessageContent;
 
 public class MessageMother {
 	private static final LocalDateTime CREATED_ON = LocalDateTime.now();
@@ -55,7 +58,28 @@ public class MessageMother {
 	}
 
 	/**
-	 * Creates a basic {@link MessageCreationRequest} with {@link com.chat.entity.model.message.TextMessageContent}
+	 * Creates a {@link MessageResponse} from text type
+	 */
+	public static MessageResponse aCompleteTextMessageResponse() {
+		return aCompleteMessageResponse(aCompleteTextMessage(), aTextMessageContentAsMap());
+	}
+
+	/**
+	 * Creates a {@link MessageResponse} from image type
+	 */
+	public static MessageResponse aCompleteImageMessageResponse() {
+		return aCompleteMessageResponse(aCompleteImageMessage(), aImageMessageContentAsMap());
+	}
+
+	/**
+	 * Creates a {@link MessageResponse} from video type
+	 */
+	public static MessageResponse aCompleteVideoMessageResponse() {
+		return aCompleteMessageResponse(aCompleteVideoMessage(), aVideoMessageContentAsMap());
+	}
+
+	/**
+	 * Creates a basic {@link MessageCreationRequest} with {@link TextMessageContent}
 	 */
 	public static MessageCreationRequest aTextMessageCreationRequest() {
 		return MessageCreationRequest.builder()
@@ -66,7 +90,7 @@ public class MessageMother {
 	}
 
 	/**
-	 * Creates a basic {@link MessageCreationRequest} with {@link com.chat.entity.model.message.ImageMessageContent}
+	 * Creates a basic {@link MessageCreationRequest} with {@link ImageMessageContent}
 	 */
 	public static MessageCreationRequest aImageMessageCreationRequest() {
 		return MessageCreationRequest.builder()
@@ -77,7 +101,7 @@ public class MessageMother {
 	}
 
 	/**
-	 * Creates a basic {@link MessageCreationRequest} with {@link com.chat.entity.model.message.VideoMessageContent}
+	 * Creates a basic {@link MessageCreationRequest} with {@link VideoMessageContent}
 	 */
 	public static MessageCreationRequest aVideoMessageCreationRequest() {
 		return MessageCreationRequest.builder()
@@ -109,57 +133,45 @@ public class MessageMother {
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.TextMessageContent}
+	 * Creates a complete {@link Message} with {@link TextMessageContent}
 	 */
 	public static Message aCompleteTextMessage() {
 		return aCompleteMessage(aCompleteTextMessageWithoutId());
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.ImageMessageContent}
+	 * Creates a complete {@link Message} with {@link ImageMessageContent}
 	 */
 	public static Message aCompleteImageMessage() {
 		return aCompleteMessage(aCompleteImageMessageWithoutId());
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.VideoMessageContent}
+	 * Creates a complete {@link Message} with {@link VideoMessageContent}
 	 */
 	public static Message aCompleteVideoMessage() {
 		return aCompleteMessage(aCompleteVideoMessageWithoutId());
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.TextMessageContent} without id
+	 * Creates a complete {@link Message} with {@link TextMessageContent} without id
 	 */
 	public static Message aCompleteTextMessageWithoutId() {
 		return aCompleteMessageWithoutId(aTextMessageContent());
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.ImageMessageContent} without id
+	 * Creates a complete {@link Message} with {@link ImageMessageContent} without id
 	 */
 	public static Message aCompleteImageMessageWithoutId() {
 		return aCompleteMessageWithoutId(aImageMessageContent());
 	}
 
 	/**
-	 * Creates a complete {@link Message} with {@link com.chat.entity.model.message.VideoMessageContent} without id
+	 * Creates a complete {@link Message} with {@link VideoMessageContent} without id
 	 */
 	public static Message aCompleteVideoMessageWithoutId() {
 		return aCompleteMessageWithoutId(aVideoMessageContent());
-	}
-
-	private static MessageResponse aCompleteTextMessageResponse() {
-		return aCompleteMessageResponse(aCompleteTextMessage(), aTextMessageContentAsMap());
-	}
-
-	private static MessageResponse aCompleteImageMessageResponse() {
-		return aCompleteMessageResponse(aCompleteImageMessage(), aImageMessageContentAsMap());
-	}
-
-	private static MessageResponse aCompleteVideoMessageResponse() {
-		return aCompleteMessageResponse(aCompleteVideoMessage(), aVideoMessageContentAsMap());
 	}
 
 	private static MessageResponse aCompleteMessageResponse(Message message, Map<String, String> messageContentAsMap) {

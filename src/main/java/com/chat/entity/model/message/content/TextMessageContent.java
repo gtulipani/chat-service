@@ -1,9 +1,12 @@
-package com.chat.entity.model.message;
+package com.chat.entity.model.message.content;
 
 import java.util.Map;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.MessageContentType;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

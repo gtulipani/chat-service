@@ -38,9 +38,9 @@ public class MessageControllerImpl implements MessageController {
 
 	@Override
 	@RequestMapping(method = RequestMethod.GET)
-	public Callable<ResponseEntity> getMessages(@RequestParam(value = "recipient") Integer recipient,
-										 @RequestParam(value = "start") Integer start,
-										 @RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
+	public Callable<ResponseEntity> getMessages(@RequestParam(value = "recipient") Long recipient,
+										 @RequestParam(value = "start") Long start,
+										 @RequestParam(value = "limit", required = false, defaultValue = "100") Long limit) {
 		return () -> {
 			log.info("Received API call to get all messages from recipient={}, start={}, limit={}", recipient, start, limit);
 			return ResponseEntity.ok(messageService.getMessages(recipient, start, limit));

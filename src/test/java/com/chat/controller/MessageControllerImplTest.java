@@ -46,9 +46,9 @@ public class MessageControllerImplTest {
 
 	@Test
 	public void testGetMessages_oneMessage() throws Exception {
-		Integer recipient = 1;
-		Integer start = 1;
-		Integer limit = 100;
+		Long recipient = 1L;
+		Long start = 1L;
+		Long limit = 100L;
 		MessagesResponse messagesResponse = aMessagesResponseWithOneTextMessage();
 		when(messageService.getMessages(recipient, start, limit)).thenReturn(messagesResponse);
 
@@ -60,9 +60,9 @@ public class MessageControllerImplTest {
 
 	@Test
 	public void testGetMessages_multipleMessages() throws Exception {
-		Integer recipient = 1;
-		Integer start = 1;
-		Integer limit = 100;
+		Long recipient = 1L;
+		Long start = 1L;
+		Long limit = 100L;
 		MessagesResponse messagesResponse = aMessagesResponseWithMultipleMessages();
 		when(messageService.getMessages(recipient, start, limit)).thenReturn(messagesResponse);
 

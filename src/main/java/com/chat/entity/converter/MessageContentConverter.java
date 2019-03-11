@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.chat.entity.model.message.MessageContent;
-import com.chat.entity.model.message.MessageContentFactory;
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.MessageContentFactory;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

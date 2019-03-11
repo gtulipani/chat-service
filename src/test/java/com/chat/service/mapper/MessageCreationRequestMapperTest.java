@@ -7,7 +7,7 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chat.entity.model.message.MessageContentFactory;
+import com.chat.entity.model.message.content.MessageContentFactory;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.repository.UserRepository;
 

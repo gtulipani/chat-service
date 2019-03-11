@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import org.testng.annotations.Test;
 
+import com.chat.entity.model.message.content.VideoMessageContentSource;
+
 public class VideoMessageContentSourceTest {
 	@Test
 	public void testOfDisplayName_youtube() {

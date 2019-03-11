@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.chat.entity.model.message.Message;
-import com.chat.entity.model.message.MessageContent;
-import com.chat.entity.model.message.MessageContentFactory;
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.MessageContentFactory;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.User;
 import com.chat.exception.CustomerMapperException;

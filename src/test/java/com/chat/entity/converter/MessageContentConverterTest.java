@@ -19,8 +19,8 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chat.entity.model.message.MessageContent;
-import com.chat.entity.model.message.MessageContentFactory;
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.MessageContentFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

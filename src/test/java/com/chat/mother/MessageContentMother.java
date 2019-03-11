@@ -4,11 +4,11 @@ import java.util.Map;
 
 import org.testng.collections.Maps;
 
-import com.chat.entity.model.message.ImageMessageContent;
-import com.chat.entity.model.message.MessageContent;
-import com.chat.entity.model.message.TextMessageContent;
-import com.chat.entity.model.message.VideoMessageContent;
-import com.chat.entity.model.message.VideoMessageContentSource;
+import com.chat.entity.model.message.content.ImageMessageContent;
+import com.chat.entity.model.message.content.MessageContent;
+import com.chat.entity.model.message.content.TextMessageContent;
+import com.chat.entity.model.message.content.VideoMessageContent;
+import com.chat.entity.model.message.content.VideoMessageContentSource;
 import com.google.common.collect.ImmutableMap;
 
 public class MessageContentMother {

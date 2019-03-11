@@ -11,7 +11,7 @@ import com.chat.entity.model.message.MessageCreationRequest;
 public interface MessageController {
 	Callable<ResponseEntity> createMessage(@RequestBody MessageCreationRequest messageCreationRequest);
 
-	Callable<ResponseEntity> getMessages(@RequestParam(value = "recipient") Integer recipient,
-										 @RequestParam(value = "start") Integer start,
-										 @RequestParam(value = "limit", defaultValue = "100") Integer limit);
+	Callable<ResponseEntity> getMessages(@RequestParam(value = "recipient") Long recipient,
+										 @RequestParam(value = "start") Long start,
+										 @RequestParam(value = "limit", defaultValue = "100") Long limit);
 }
