@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chat.entity.model.message.MessageCreationRequest;
@@ -32,6 +33,17 @@ public class MessageControllerImpl implements MessageController {
 		return () -> {
 			log.info("Received API call to create a message with sender={}, recipient={}", messageCreationRequest.getSender(), messageCreationRequest.getRecipient());
 			return ResponseEntity.ok(messageService.createMessage(messageCreationRequest));
+		};
+	}
+
+	@Override
+	@RequestMapping(method = RequestMethod.GET)
+	public Callable<ResponseEntity> getMessages(@RequestParam(value = "recipient") Integer recipient,
+										 @RequestParam(value = "start") Integer start,
+										 @RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
+		return () -> {
+			log.info("Received API call to get all messages from recipient={}, start={}, limit={}", recipient, start, limit);
+			return ResponseEntity.ok(messageService.getMessages(recipient, start, limit));
 		};
 	}
 }

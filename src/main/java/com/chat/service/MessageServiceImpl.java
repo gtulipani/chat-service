@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.chat.entity.model.message.Message;
 import com.chat.entity.model.message.MessageCreationRequest;
 import com.chat.entity.model.message.MessageCreationResponse;
+import com.chat.entity.model.message.MessagesResponse;
 import com.chat.repository.MessageRepository;
 import com.chat.service.mapper.MessageMapper;
 
@@ -31,5 +32,10 @@ public class MessageServiceImpl implements MessageService {
 		MessageCreationResponse messageCreationResponse = messageMapper.map(messageRepository.save(message), MessageCreationResponse.class);
 		log.info("Successfully created message with sender={}, recipient={}", messageCreationRequest.getSender(), messageCreationRequest.getRecipient());
 		return messageCreationResponse;
+	}
+
+	@Override
+	public MessagesResponse getMessages(Integer recipient, Integer start, Integer limit) {
+		return null;
 	}
 }
