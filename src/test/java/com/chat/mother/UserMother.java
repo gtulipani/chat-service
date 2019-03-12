@@ -10,17 +10,22 @@ public class UserMother {
 	private static final LocalDateTime LAST_MODIFIED = LocalDateTime.now();
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
+	private static final String ANOTHER_USERNAME = "another_username";
+	private static final String ANOTHER_PASSWORD = "another_password";
 
 	/**
 	 * Creates a basic {@link User} with all fields set except from {@link User#id} which remains null
 	 */
 	public static User aUserWithoutId() {
-		return User.builder()
-				.createdOn(CREATED_ON)
-				.lastModified(LAST_MODIFIED)
-				.username(USERNAME)
-				.password(PASSWORD)
-				.build();
+		return aUserWithData(USERNAME, PASSWORD);
+	}
+
+	/**
+	 * Creates a basic {@link User} with all fields set except from {@link User#id} which remains null. Different
+	 * username and password than {@link #aUserWithoutId()}
+	 */
+	public static User aDifferentUserWithoutId() {
+		return aUserWithData(ANOTHER_USERNAME, ANOTHER_PASSWORD);
 	}
 
 	/**
@@ -33,10 +38,10 @@ public class UserMother {
 	}
 
 	/**
-	 * Creates a basic {@link User} but with different ID than {@link #aUser()}
+	 * Creates a basic {@link User} but with different id, username and password than {@link #aUser()}
 	 */
 	public static User aDifferentUser() {
-		User user = aUserWithoutId();
+		User user = aDifferentUserWithoutId();
 		user.setId(2L);
 		return user;
 	}
@@ -48,6 +53,15 @@ public class UserMother {
 	public static UserCreationResponseEntity aUserCreationResponseEntity() {
 		return UserCreationResponseEntity.builder()
 				.id(aUser().getId())
+				.build();
+	}
+
+	private static User aUserWithData(String username, String password) {
+		return User.builder()
+				.createdOn(CREATED_ON)
+				.lastModified(LAST_MODIFIED)
+				.username(username)
+				.password(password)
 				.build();
 	}
 }

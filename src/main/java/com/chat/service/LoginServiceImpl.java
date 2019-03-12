@@ -17,6 +17,6 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	public Token createToken(User user) {
-		return null;
+		return userService.refreshToken(user);
 	}
 }
