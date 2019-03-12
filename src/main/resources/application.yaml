@@ -37,14 +37,23 @@ encryption:
 management:
   endpoint:
     health:
+      enabled: true
       show-details: when_authorized
+    info:
+      enabled: true
+    metrics:
+      enabled: true
   endpoints:
     web:
       base-path: /
       exposure:
-        include: health,info,loggers,metrics
-      path-mapping:
-        loggers: api/v1/admin/loggers
+        include: info,health,metrics
+
+info:
+  build:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
 
 logging:
   level:
