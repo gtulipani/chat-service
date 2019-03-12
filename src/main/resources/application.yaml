@@ -1,5 +1,6 @@
 server:
   port: 8080
+  use-forward-headers: true
 
 spring:
   datasource:
@@ -23,6 +24,11 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+
+signature:
+  validation:
+    use:
+      https: false
 
 encryption:
   key: 9MDJZy0kgctfIuBP
