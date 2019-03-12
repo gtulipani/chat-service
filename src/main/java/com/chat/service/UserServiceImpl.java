@@ -1,5 +1,7 @@
 package com.chat.service;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
 import com.chat.service.mapper.UserMapper;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
@@ -29,7 +32,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserCreationResponseEntity createUser(User user) {
-		return userMapper.map(userRepository.save(user), UserCreationResponseEntity.class);
+		User storedUser = userRepository.save(user);
+		log.info("Successfully created message with userName={}", user.getUsername());
+		return userMapper.map(storedUser, UserCreationResponseEntity.class);
 	}
 
 	@Override
@@ -48,9 +53,14 @@ public class UserServiceImpl implements UserService {
 			throw new LoginException(user.getUsername());
 		}
 
-		return Token.builder()
+		Token newToken = Token.builder()
 				.id(storedUser.getId())
 				.token(authenticationTokenProvider.getToken())
 				.build();
+		storedUser.setToken(newToken.getToken());
+		userRepository.save(storedUser);
+
+		log.info("Successfully created token for user with userName={}", user.getUsername());
+		return newToken;
 	}
 }

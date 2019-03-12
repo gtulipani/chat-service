@@ -55,6 +55,10 @@ public class User implements Serializable {
 	@Convert(converter = SensitiveFieldConverter.class)
 	private String password;
 
+	@Column(name = "token")
+	@Convert(converter = SensitiveFieldConverter.class)
+	private String token;
+
 	@PrePersist
 	protected void onCreate() {
 		createdOn = LocalDateTime.now();

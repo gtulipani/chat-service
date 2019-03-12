@@ -8,11 +8,16 @@ import static com.chat.mother.UserMother.aUserCreationResponseEntity;
 import static com.chat.mother.UserMother.aUserWithoutId;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
@@ -37,6 +42,8 @@ public class UserServiceImplTest {
 	private UserMapper userMapper;
 	@Mock
 	private AuthenticationTokenProviderImpl authenticationTokenProvider;
+	@Captor
+	ArgumentCaptor<User> userArgumentCaptor;
 
 	@BeforeMethod
 	public void setup() {
@@ -84,7 +91,10 @@ public class UserServiceImplTest {
 
 		Token token = userService.refreshToken(userWithoutId);
 
+		verify(userRepository).save(userArgumentCaptor.capture());
+		User capturedUser = userArgumentCaptor.getValue();
 		assertThat(token).isEqualTo(expectedToken);
+		assertThat(capturedUser.getToken()).isEqualTo(RANDOM_TOKEN);
 	}
 
 	@Test
@@ -95,6 +105,7 @@ public class UserServiceImplTest {
 		assertThatExceptionOfType(UserNotFoundException.class)
 				.isThrownBy(() -> userService.refreshToken(userWithoutId))
 				.withMessage("Couldn't find user with username=%s", userWithoutId.getUsername());
+		verify(userRepository, never()).save(any(User.class));
 	}
 
 	@Test
@@ -106,5 +117,6 @@ public class UserServiceImplTest {
 		assertThatExceptionOfType(LoginException.class)
 				.isThrownBy(() -> userService.refreshToken(userWithoutId))
 				.withMessage("Couldn't authenticate user with userName=%s", userWithoutId.getUsername());
+		verify(userRepository, never()).save(any(User.class));
 	}
 }
