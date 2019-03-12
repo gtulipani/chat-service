@@ -45,14 +45,14 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional
 	public MessagesResponse getMessages(Long recipient, Long start, Long limit) {
 		User recipientUser = userService.getUserById(recipient);
-		Long messageIdStart = messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipientUser, start, PageRequest.of(0, 1)).getContent()
+		Long messageIdStart = messageRepository.findFirstByRecipientAndIdLessThanEqualOrderByIdDesc(recipientUser, start, PageRequest.of(0, 1)).getContent()
 				.stream()
 				.map(Message::getId)
 				.findFirst()
 				.orElse(start);
 
 		MessagesResponse messagesResponse = MessagesResponse.builder()
-				.messages(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipientUser, messageIdStart, PageRequest.of(0, Math.toIntExact(limit))).getContent()
+				.messages(messageRepository.findAllByRecipientAndIdGreaterThanEqualOrderByIdAsc(recipientUser, messageIdStart, PageRequest.of(0, Math.toIntExact(limit))).getContent()
 						.stream()
 						.map(message -> messageMapper.map(message, MessageResponse.class))
 						.collect(Collectors.toList()))

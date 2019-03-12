@@ -9,9 +9,7 @@ import com.chat.entity.model.User;
 import com.chat.entity.model.message.Message;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
-	@Query("SELECT m FROM Message m WHERE m.recipient = ?1 AND m.id <= ?2 ORDER BY m.id DESC")
-	Page<Message> findFirstMessageForRecipientAndIdLowerThan(User recipient, Long messageId, Pageable pageable);
+	Page<Message> findFirstByRecipientAndIdLessThanEqualOrderByIdDesc(User recipient, Long messageId, Pageable pageable);
 
-	@Query("SELECT m FROM Message m WHERE m.recipient = ?1 AND m.id >= ?2 ORDER BY m.id ASC")
-	Page<Message> findMessagesForRecipientAndIdLowerThanWithLimit(User recipient, Long messageId, Pageable pageable);
+	Page<Message> findAllByRecipientAndIdGreaterThanEqualOrderByIdAsc(User recipient, Long messageId, Pageable pageable);
 }

@@ -114,9 +114,9 @@ public class MessageServiceImplTest {
 		Long recipient = recipientUser.getId();
 		Long start = message.getId();
 		Long limit = 100L;
-		when(messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipientUser, start, PageRequest.of(0, 1)))
+		when(messageRepository.findFirstByRecipientAndIdLessThanEqualOrderByIdDesc(recipientUser, start, PageRequest.of(0, 1)))
 				.thenAnswer(invocationOnMock -> new PageImpl<>(messageList, new PageRequest(0, 1), messageList.size()));
-		when(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipientUser, start, PageRequest.of(0, Math.toIntExact(limit))))
+		when(messageRepository.findAllByRecipientAndIdGreaterThanEqualOrderByIdAsc(recipientUser, start, PageRequest.of(0, Math.toIntExact(limit))))
 				.thenAnswer(invocationOnMock -> new PageImpl<>(messageList, new PageRequest(0, 1), messageList.size()));
 		when(messageMapper.map(message, MessageResponse.class)).thenReturn(messageResponse);
 		when(userService.getUserById(recipient)).thenReturn(recipientUser);
@@ -138,9 +138,9 @@ public class MessageServiceImplTest {
 		Long recipient = recipientUser.getId();
 		Long start = textMessage.getId();
 		Long limit = 100L;
-		when(messageRepository.findFirstMessageForRecipientAndIdLowerThan(recipientUser, start, PageRequest.of(0, 1)))
+		when(messageRepository.findFirstByRecipientAndIdLessThanEqualOrderByIdDesc(recipientUser, start, PageRequest.of(0, 1)))
 				.thenAnswer(invocationOnMock -> new PageImpl<>(Collections.singletonList(textMessage), new PageRequest(0, 1), 1));
-		when(messageRepository.findMessagesForRecipientAndIdLowerThanWithLimit(recipientUser, start, PageRequest.of(0, Math.toIntExact(limit))))
+		when(messageRepository.findAllByRecipientAndIdGreaterThanEqualOrderByIdAsc(recipientUser, start, PageRequest.of(0, Math.toIntExact(limit))))
 				.thenAnswer(invocationOnMock -> new PageImpl<>(messageList, new PageRequest(0, messageList.size()), messageList.size()));
 		when(messageMapper.map(textMessage, MessageResponse.class)).thenReturn(textMessageResponse);
 		when(messageMapper.map(imageMessage, MessageResponse.class)).thenReturn(imageMessageResponse);
