@@ -63,4 +63,10 @@ public class UserServiceImpl implements UserService {
 		log.info("Successfully created token for user with userName={}", user.getUsername());
 		return newToken;
 	}
+
+	@Override
+	@Transactional
+	public void verifyToken(String token) {
+		return ;
+	}
 }

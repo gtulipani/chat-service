@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -91,7 +92,7 @@ public class UserServiceImplTest {
 
 		Token token = userService.refreshToken(userWithoutId);
 
-		verify(userRepository).save(userArgumentCaptor.capture());
+		verify(userRepository, times(1)).save(userArgumentCaptor.capture());
 		User capturedUser = userArgumentCaptor.getValue();
 		assertThat(token).isEqualTo(expectedToken);
 		assertThat(capturedUser.getToken()).isEqualTo(RANDOM_TOKEN);

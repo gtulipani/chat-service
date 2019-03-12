@@ -10,4 +10,6 @@ public interface UserService {
 	User getUserById(Long id);
 
 	Token refreshToken(User user);
+
+	void verifyToken(String token);
 }
