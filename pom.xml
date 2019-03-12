@@ -12,10 +12,6 @@
 		<version>2.0.2.RELEASE</version>
 	</parent>
 
-	<prerequisites>
-		<maven>3.3.9</maven>
-	</prerequisites>
-	
 	<properties>
 		<java.version>1.8</java.version>
 		<flyway-core.version>5.2.1</flyway-core.version>
@@ -116,6 +112,17 @@
 				<artifactId>versions-maven-plugin</artifactId>
 				<configuration>
 					<generateBackupPoms>false</generateBackupPoms>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<configuration>
+					<repository>chat-service</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
 				</configuration>
 			</plugin>
 		</plugins>
