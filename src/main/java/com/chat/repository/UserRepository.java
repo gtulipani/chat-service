@@ -7,5 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.chat.entity.model.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	Optional<User> findByUsername(String username);
+	Optional<User> findByUsernameAndPassword(String username, String password);
+
+	Boolean existsByToken(String token);
 }

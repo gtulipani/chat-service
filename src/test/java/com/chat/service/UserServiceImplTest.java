@@ -2,11 +2,11 @@ package com.chat.service;
 
 import static com.chat.mother.TokenMother.RANDOM_TOKEN;
 import static com.chat.mother.TokenMother.aToken;
-import static com.chat.mother.UserMother.aDifferentUser;
 import static com.chat.mother.UserMother.aUser;
 import static com.chat.mother.UserMother.aUserCreationResponseEntity;
 import static com.chat.mother.UserMother.aUserWithoutId;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -24,11 +24,11 @@ import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.chat.authentication.AuthenticationTokenProvider;
 import com.chat.authentication.AuthenticationTokenProviderImpl;
 import com.chat.entity.model.Token;
 import com.chat.entity.model.User;
 import com.chat.entity.model.UserCreationResponseEntity;
+import com.chat.exception.AuthenticationTokenException;
 import com.chat.exception.LoginException;
 import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
@@ -87,7 +87,8 @@ public class UserServiceImplTest {
 		User userWithoutId = aUserWithoutId();
 		User user = aUser();
 		Token expectedToken = aToken();
-		when(userRepository.findByUsername(userWithoutId.getUsername())).thenReturn(Optional.of(user));
+		when(userRepository.findByUsernameAndPassword(userWithoutId.getUsername(), userWithoutId.getPassword()))
+				.thenReturn(Optional.of(user));
 		when(authenticationTokenProvider.getToken()).thenReturn(RANDOM_TOKEN);
 
 		Token token = userService.refreshToken(userWithoutId);
@@ -99,25 +100,32 @@ public class UserServiceImplTest {
 	}
 
 	@Test
-	public void testRefreshTokenWithNotFoundUser_throwsUserNotFoundException() {
+	public void testRefreshTokenWithNotFoundUser_throwsLoginException() {
 		User userWithoutId = aUserWithoutId();
-		doThrow(new UserNotFoundException(userWithoutId.getUsername())).when(userRepository).findByUsername(userWithoutId.getUsername());
+		when(userRepository.findByUsernameAndPassword(userWithoutId.getUsername(), userWithoutId.getPassword()))
+				.thenReturn(Optional.empty());
 
-		assertThatExceptionOfType(UserNotFoundException.class)
+		assertThatExceptionOfType(LoginException.class)
 				.isThrownBy(() -> userService.refreshToken(userWithoutId))
-				.withMessage("Couldn't find user with username=%s", userWithoutId.getUsername());
+				.withMessage("Couldn't authenticate user with username=%s", userWithoutId.getUsername());
 		verify(userRepository, never()).save(any(User.class));
 	}
 
 	@Test
-	public void testRefreshTokenWithIncorrectPassword_throwsLoginException() {
-		User userWithoutId = aUserWithoutId();
-		User anotherUserWithoutId = aDifferentUser();
-		when(userRepository.findByUsername(userWithoutId.getUsername())).thenReturn(Optional.of(anotherUserWithoutId));
+	public void testVerifyToken() {
+		User user = aUser();
+		when(userRepository.existsByToken(RANDOM_TOKEN)).thenReturn(true);
 
-		assertThatExceptionOfType(LoginException.class)
-				.isThrownBy(() -> userService.refreshToken(userWithoutId))
-				.withMessage("Couldn't authenticate user with userName=%s", userWithoutId.getUsername());
-		verify(userRepository, never()).save(any(User.class));
+		assertThatCode(() -> userService.verifyToken(user.getToken()))
+				.doesNotThrowAnyException();
+	}
+
+	@Test
+	public void testVerifyTokenNotFound_throwsAuthenticationTokenException() {
+		when(userRepository.existsByToken(RANDOM_TOKEN)).thenReturn(false);
+
+		assertThatExceptionOfType(AuthenticationTokenException.class)
+				.isThrownBy(() -> userService.verifyToken(RANDOM_TOKEN))
+				.withMessage("Invalid token");
 	}
 }

@@ -1,5 +1,7 @@
 package com.chat.service;
 
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import com.chat.authentication.AuthenticationTokenProvider;
 import com.chat.entity.model.Token;
 import com.chat.entity.model.User;
 import com.chat.entity.model.UserCreationResponseEntity;
+import com.chat.exception.AuthenticationTokenException;
 import com.chat.exception.LoginException;
 import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
@@ -46,12 +49,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public Token refreshToken(User user) {
-		User storedUser = userRepository.findByUsername(user.getUsername())
-				.orElseThrow(() -> new UserNotFoundException(user.getUsername()));
-
-		if (!storedUser.getPassword().equals(user.getPassword())) {
-			throw new LoginException(user.getUsername());
-		}
+		User storedUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword())
+				.orElseThrow(() -> new LoginException(user.getUsername()));
 
 		Token newToken = Token.builder()
 				.id(storedUser.getId())
@@ -67,6 +66,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void verifyToken(String token) {
-		return ;
+		if (!userRepository.existsByToken(token)) {
+			throw new AuthenticationTokenException();
+		}
 	}
 }

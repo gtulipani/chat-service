@@ -6,6 +6,7 @@ import com.chat.entity.model.Token;
 
 public class TokenMother {
 	public static final String RANDOM_TOKEN = UUID.randomUUID().toString();
+	public static final String ANOTHER_RANDOM_TOKEN = UUID.randomUUID().toString();
 	
 	/**
 	 * Creates a basic {@link Token}

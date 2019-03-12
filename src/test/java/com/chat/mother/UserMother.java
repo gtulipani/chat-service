@@ -1,5 +1,8 @@
 package com.chat.mother;
 
+import static com.chat.mother.TokenMother.ANOTHER_RANDOM_TOKEN;
+import static com.chat.mother.TokenMother.RANDOM_TOKEN;
+
 import java.time.LocalDateTime;
 
 import com.chat.entity.model.User;
@@ -17,7 +20,7 @@ public class UserMother {
 	 * Creates a basic {@link User} with all fields set except from {@link User#id} which remains null
 	 */
 	public static User aUserWithoutId() {
-		return aUserWithData(USERNAME, PASSWORD);
+		return aUserWithData(USERNAME, PASSWORD, RANDOM_TOKEN);
 	}
 
 	/**
@@ -25,7 +28,7 @@ public class UserMother {
 	 * username and password than {@link #aUserWithoutId()}
 	 */
 	public static User aDifferentUserWithoutId() {
-		return aUserWithData(ANOTHER_USERNAME, ANOTHER_PASSWORD);
+		return aUserWithData(ANOTHER_USERNAME, ANOTHER_PASSWORD, ANOTHER_RANDOM_TOKEN);
 	}
 
 	/**
@@ -38,7 +41,7 @@ public class UserMother {
 	}
 
 	/**
-	 * Creates a basic {@link User} but with different id, username and password than {@link #aUser()}
+	 * Creates a basic {@link User} but with different id, username, password and token than {@link #aUser()}
 	 */
 	public static User aDifferentUser() {
 		User user = aDifferentUserWithoutId();
@@ -56,12 +59,13 @@ public class UserMother {
 				.build();
 	}
 
-	private static User aUserWithData(String username, String password) {
+	private static User aUserWithData(String username, String password, String token) {
 		return User.builder()
 				.createdOn(CREATED_ON)
 				.lastModified(LAST_MODIFIED)
 				.username(username)
 				.password(password)
+				.token(token)
 				.build();
 	}
 }
