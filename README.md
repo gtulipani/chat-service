@@ -68,3 +68,156 @@ kubectl apply -f chat-service.yaml
 ```
 The services status can be easily verified using the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard). The
 result should be similar to: ![](https://i.imgur.com/UOo5XYY.png)
+
+## Technologies
+### Spring
+The Application is a standard [Spring Boot](https://spring.io/) Application and it's conformed by the following layers:
+- **AuthenticationTokenInterceptor**: [HandlerInterceptor](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/handler/HandlerInterceptorAdapter.html) 
+to verify authentication for the requests
+- **Controller**: handles all the incoming requests from the outside world. There are three of them: *MessageController*,
+*UserController* and *LoginController*.
+- **Service**: handles all the logic from the incoming requests from the controllers. There are also three of them: *MessageService*,
+*UserService* and *LoginService*.
+- **Repository**: [CrudRespository](https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html)
+that handles the last communication between the services and the Database. There are two of them: *MessageRepository* and
+*UserRepository*.
+
+### MySQL
+The chosen Database Engine is [MySQL](https://www.mysql.com/), a free relational DB model. By the moment it contains
+only two table called `users` and `messages`. The first one contains the following columns:
+```
+id|created_on|last_modified|usernane|password|token|
+```
+
+The second one contains the following columns:
+```
+id|created_on|last_modified|sender|recipient|content|
+```
+
+### Flyway
+[Flyway](http://flywaydb.org/) is a database migration tool similar to Liquibase. It is recommended by Spring Boot.
+See the documentation. The migrations scripts are in SQL directly.
+
+The project is configured to run the migration scripts on start.
+
+### Bearer Token Authentication
+The `/messages` endpoint is authenticated with [Bearer Token](https://oauth.net/2/bearer-tokens/) Authorization. The token
+is provided as part of the response of the `/login` API and it doesn't expire at the moment. If no token is found as part
+of these requests, or an incorrect one is found instead, a **401** (Unauthorized) Error Message is returned.
+
+## Postman Collection
+A [Postman](https://www.getpostman.com/) has been included in the repository, containing all the existing endpoints
+among with examples:
+### GET /messages
+API to get all the messages for a given recipient starting with a given messageId (or the next one lower to it). It
+accepts three query parameters: `recipient`, `start` and `limit`. The last parameter is optional and its default value
+is 100. The response includes all the messages with the recipient passed as parameter starting from the messageId defined
+with the `start` parameter:
+```
+{
+    "messages": [
+        {
+            "id": 1,
+            "timestamp": "2019-03-12T02:52:52.000+0000",
+            "sender": 1,
+            "recipient": 2,
+            "content": {
+                "type": "text",
+                "text": "Example message"
+            }
+        }
+    ]
+}
+```
+
+### POST /messages
+API to create a new message. The id from the message among with the timestamp is returned as part of the response. Expected input payload:
+```
+{
+    "sender": 1,
+    "recipient": 2,
+    "content": {
+        ...
+    }
+}
+```
+
+Example response payload:
+```
+{
+    "id": 1,
+    "timestamp": "2019-03-12T02:55:38.187+0000"
+}
+```
+
+Three different type of messages can be created: *text*, *image* or *video*, each one of them with different content format.
+
+#### Text Message
+The `content` contains only a `text` field:
+
+```
+"content": {
+    "type": "text",
+    "text": "Example message"
+}
+```
+
+#### Image Message
+The `content` contains `url`, `height` and `width` fields:
+
+```
+"content": {
+    "type": "image",
+    "url": "https://media.licdn.com/dms/image/C4E0BAQF768b2Tj5qQQ/company-logo_200_200/0?e=2159024400&v=beta&t=BiHrNL31_Jj1o2-tRifxoFXWeYhkfM-Xu4mcCPkQ6j0",
+    "height": 200,
+    "width": 200
+}
+```
+
+#### Video Message
+The `content` contains `url` and `source` fields:
+
+```
+"content": {
+    "type": "video",
+    "url": "https://www.youtube.com/watch?v=X3paOmcrTjQ",
+    "source": "youtube"
+}
+```
+
+### POST /users
+API to create a new user with `username` and `password` in the system. The `id` from the user is returned as part of the payload.
+Example input payload:
+```
+{
+    "username": "gtulipani",
+    "password": "password"
+}
+```
+
+Example response payload:
+```
+{
+    "id": "1"
+}
+```
+
+### POST /login
+API to login with an existing username and password. A token is returned as part of the payload, and can be user for the
+subsequent authenticated APIs. Example input payload:
+```
+{
+    "username": "gtulipani",
+    "password": "password"
+}
+```
+
+Example response payload:
+```
+{
+    "id": 1,
+    "token": "Z19uvknyEbFmr3s7qkuPj"
+}
+```
+
+

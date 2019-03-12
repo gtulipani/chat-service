@@ -1,0 +1,879 @@
+{
+	"info": {
+		"_postman_id": "7c51894d-91aa-4758-bb52-ef1e13671508",
+		"name": "Chat Service",
+		"description": "This collection contains all the available endpoints implemented in the Asapp Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /check",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/check",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"check"
+					]
+				},
+				"description": "Basic health check"
+			},
+			"response": [
+				{
+					"name": "POST /check - Successful Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"check"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:48:10 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"health\": \"ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "POST /users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"gtulipani\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				},
+				"description": "Creates a user with the username and password included in the payload"
+			},
+			"response": [
+				{
+					"name": "POST /users - Successful Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"gtulipani\",\n    \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:48:54 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "POST /login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"gtulipani\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Basic API to login with username and password"
+			},
+			"response": [
+				{
+					"name": "POST /login - Wrong username or password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"gtulipani\",\n    \"password\": \"wrong_password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:51:12 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-03-12T02:51:12.108+0000\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"message\": \"Couldn't authenticate user with username=gtulipani\",\n    \"path\": \"/login\"\n}"
+				},
+				{
+					"name": "POST /login - Valid username and password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"gtulipani\",\n    \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:50:45 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"token\": \"Z19uvknyEbFmr3s7qkuPj\"\n}"
+				}
+			]
+		},
+		{
+			"name": "POST /messages - Text Message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "8VwWAy1iHcsPM7EU0xHqU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"text\",\n        \"text\": \"Example message\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"messages"
+					]
+				},
+				"description": "Creates a basic text message"
+			},
+			"response": [
+				{
+					"name": "POST /messages - Text Message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"text\",\n        \"text\": \"Example message\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:52:52 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"timestamp\": \"2019-03-12T02:52:52.183+0000\"\n}"
+				},
+				{
+					"name": "POST /messages - Invalid token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"text\",\n        \"text\": \"Example message\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:53:25 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-03-12T02:53:25.826+0000\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"message\": \"Invalid token\",\n    \"path\": \"/messages\"\n}"
+				}
+			]
+		},
+		{
+			"name": "POST /messages - Image Message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "8VwWAy1iHcsPM7EU0xHqU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"image\",\n        \"url\": \"https://media.licdn.com/dms/image/C4E0BAQF768b2Tj5qQQ/company-logo_200_200/0?e=2159024400&v=beta&t=BiHrNL31_Jj1o2-tRifxoFXWeYhkfM-Xu4mcCPkQ6j0\",\n        \"height\": 200,\n        \"width\": 200\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"messages"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST /messages - Image Message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"image\",\n        \"url\": \"https://media.licdn.com/dms/image/C4E0BAQF768b2Tj5qQQ/company-logo_200_200/0?e=2159024400&v=beta&t=BiHrNL31_Jj1o2-tRifxoFXWeYhkfM-Xu4mcCPkQ6j0\",\n        \"height\": 200,\n        \"width\": 200\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:54:07 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"timestamp\": \"2019-03-12T02:54:07.197+0000\"\n}"
+				}
+			]
+		},
+		{
+			"name": "POST /messages - Video Message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "8VwWAy1iHcsPM7EU0xHqU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"video\",\n        \"url\": \"https://www.youtube.com/watch?v=X3paOmcrTjQ\",\n        \"source\": \"youtube\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"messages"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "POST /messages - Video Message",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sender\": 1,\n    \"recipient\": 2,\n    \"content\": {\n        \"type\": \"video\",\n        \"url\": \"https://www.youtube.com/watch?v=X3paOmcrTjQ\",\n        \"source\": \"youtube\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:55:38 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"timestamp\": \"2019-03-12T02:55:38.187+0000\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GET /messages - Get Messages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "8VwWAy1iHcsPM7EU0xHqU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/messages?recipient=2&start=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"messages"
+					],
+					"query": [
+						{
+							"key": "recipient",
+							"value": "2"
+						},
+						{
+							"key": "start",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET /messages - Get Messages for recipient 1 and start 1 and limit 1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages?recipient=2&start=1&limit=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "recipient",
+									"value": "2"
+								},
+								{
+									"key": "start",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:57:36 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messages\": [\n        {\n            \"id\": 1,\n            \"timestamp\": \"2019-03-12T02:52:52.000+0000\",\n            \"sender\": 1,\n            \"recipient\": 2,\n            \"content\": {\n                \"type\": \"text\",\n                \"text\": \"Example message\"\n            }\n        }\n    ]\n}"
+				},
+				{
+					"name": "GET /messages - Recipient not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages?recipient=3&start=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "recipient",
+									"value": "3"
+								},
+								{
+									"key": "start",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:58:28 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-03-12T02:58:28.259+0000\",\n    \"status\": 404,\n    \"error\": \"Not Found\",\n    \"message\": \"Couldn't find user with id=3\",\n    \"path\": \"/messages\"\n}"
+				},
+				{
+					"name": "GET /messages - Get Messages for recipient 1 and start 1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages?recipient=2&start=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "recipient",
+									"value": "2"
+								},
+								{
+									"key": "start",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:56:50 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"messages\": [\n        {\n            \"id\": 1,\n            \"timestamp\": \"2019-03-12T02:52:52.000+0000\",\n            \"sender\": 1,\n            \"recipient\": 2,\n            \"content\": {\n                \"type\": \"text\",\n                \"text\": \"Example message\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"timestamp\": \"2019-03-12T02:54:07.000+0000\",\n            \"sender\": 1,\n            \"recipient\": 2,\n            \"content\": {\n                \"width\": \"200\",\n                \"type\": \"image\",\n                \"url\": \"https://media.licdn.com/dms/image/C4E0BAQF768b2Tj5qQQ/company-logo_200_200/0?e=2159024400&v=beta&t=BiHrNL31_Jj1o2-tRifxoFXWeYhkfM-Xu4mcCPkQ6j0\",\n                \"height\": \"200\"\n            }\n        },\n        {\n            \"id\": 3,\n            \"timestamp\": \"2019-03-12T02:55:38.000+0000\",\n            \"sender\": 1,\n            \"recipient\": 2,\n            \"content\": {\n                \"type\": \"video\",\n                \"url\": \"https://www.youtube.com/watch?v=X3paOmcrTjQ\",\n                \"source\": \"youtube\"\n            }\n        }\n    ]\n}"
+				},
+				{
+					"name": "GET /messages - Invalid token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages?recipient=2&start=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "recipient",
+									"value": "2"
+								},
+								{
+									"key": "start",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Mar 2019 02:58:57 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"timestamp\": \"2019-03-12T02:58:57.583+0000\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"message\": \"Invalid token\",\n    \"path\": \"/messages\"\n}"
+				}
+			]
+		}
+	]
+}
