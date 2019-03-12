@@ -14,6 +14,7 @@ import com.chat.entity.model.User;
 import com.chat.entity.model.UserCreationResponseEntity;
 import com.chat.exception.AuthenticationTokenException;
 import com.chat.exception.LoginException;
+import com.chat.exception.UserAlreadyExistsException;
 import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
 import com.chat.service.mapper.UserMapper;
@@ -35,6 +36,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserCreationResponseEntity createUser(User user) {
+		if (userRepository.existsByUsername(user.getUsername())) {
+			throw new UserAlreadyExistsException(user.getUsername());
+		}
+		
 		User storedUser = userRepository.save(user);
 		log.info("Successfully created message with userName={}", user.getUsername());
 		return userMapper.map(storedUser, UserCreationResponseEntity.class);

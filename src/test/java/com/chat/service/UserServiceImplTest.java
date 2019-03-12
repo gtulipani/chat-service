@@ -30,6 +30,7 @@ import com.chat.entity.model.User;
 import com.chat.entity.model.UserCreationResponseEntity;
 import com.chat.exception.AuthenticationTokenException;
 import com.chat.exception.LoginException;
+import com.chat.exception.UserAlreadyExistsException;
 import com.chat.exception.UserNotFoundException;
 import com.chat.repository.UserRepository;
 import com.chat.service.mapper.UserMapper;
@@ -58,10 +59,21 @@ public class UserServiceImplTest {
 		User userWithoutId = aUserWithoutId();
 		User user = aUser();
 		UserCreationResponseEntity userCreationResponseEntity = aUserCreationResponseEntity();
+		when(userRepository.existsByUsername(userWithoutId.getUsername())).thenReturn(false);
 		when(userRepository.save(userWithoutId)).thenReturn(user);
 		when(userMapper.map(user, UserCreationResponseEntity.class)).thenReturn(userCreationResponseEntity);
 
 		assertThat(userService.createUser(userWithoutId)).isEqualTo(userCreationResponseEntity);
+	}
+
+	@Test
+	public void testCreateUserThatAlreadyExists_throwsUserAlreadyExistsException() {
+		User userWithoutId = aUserWithoutId();
+		when(userRepository.existsByUsername(userWithoutId.getUsername())).thenReturn(true);
+
+		assertThatExceptionOfType(UserAlreadyExistsException.class)
+				.isThrownBy(() -> userService.createUser(userWithoutId))
+				.withMessage("User with username=%s already exists", userWithoutId.getUsername());
 	}
 
 	@Test
