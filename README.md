@@ -242,4 +242,6 @@ Example response payload:
 }
 ```
 
-
+## CI
+[Travis CI](https://travis-ci.org/) has been chosen as CI Software. It's already configured and runs all the UT for
+every PR and Build (including `master`). The status can be found at the top of this file.
