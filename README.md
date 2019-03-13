@@ -105,8 +105,30 @@ The `/messages` endpoint is authenticated with [Bearer Token](https://oauth.net/
 is provided as part of the response of the `/login` API and it doesn't expire at the moment. If no token is found as part
 of these requests, or an incorrect one is found instead, a **401** (Unauthorized) Error Message is returned.
 
+### Orika Mapping
+[Orika](https://orika-mapper.github.io/orika-docs/) is a framework used to convert different entities on a extensible, clear
+and practical way. We have defined a *CustomMapperStrategy* that acts as a [CustomMapper](https://orika-mapper.github.io/orika-docs/advanced-mappings.html)
+among with a `Strategy` pattern, in order to be able to register them programatically (take a look at `MessageMapper`).
+The mappers reduce the work necessary to convert between the necessary entities. E.g. to convert between a entity of type
+*MessageCreationRequest* to an entity of type *Message*, we just need to:
+```
+messageMapper.map(messageCreationRequest, Message.class)
+``` 
+
+### AES Encryption Service
+[Advanced Encryption Standard](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) is a subset of Rijndael block
+cypher with many intermediate steps used to encrypt data using an *encryption key* and an *initialization vector*. These
+two values are included in the `application.yaml`, but could be easily overriden on each environment, so that the data
+remains secured on each particular environment. A Service has been created that implements this algorithm, in order to 
+securely store all sensitive data (`password` and `token`).
+
+### Sensitive Field Converter
+A [JPA AttributeConverter](https://www.baeldung.com/jpa-attribute-converters) has been created in order automatically:
+- Encrypt all sensitive fields before storing them in the DB
+- Decrypt all sensitive fields after retrieving them from the DB
+
 ## Postman Collection
-A [Postman](https://www.getpostman.com/) has been included in the repository, containing all the existing endpoints
+A [Postman Collection](https://www.getpostman.com/) has been included in the repository, containing all the existing endpoints
 among with examples:
 ### GET /messages
 API to get all the messages for a given recipient starting with a given messageId (or the next one lower to it). It
