@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.chat.exception.EncryptionException;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Sets;
 
 @Slf4j
@@ -44,7 +45,7 @@ public class AESEncryptionServiceImpl implements EncryptionService {
 		try {
 			return Base64.encodeBase64String(getCipher(Cipher.ENCRYPT_MODE).doFinal(value.getBytes()));
 		} catch (Exception e) {
-			log.error("Failed to encrypt data - Error={}", e);
+			log.error("Failed to encrypt data - Error={}", e.getMessage(), e);
 			throw new EncryptionException(e);
 		}
 	}
@@ -54,12 +55,13 @@ public class AESEncryptionServiceImpl implements EncryptionService {
 		try {
 			return new String(getCipher(Cipher.DECRYPT_MODE).doFinal(Base64.decodeBase64(value)));
 		} catch (Exception e) {
-			log.error("Failed to decrypt data - Error={}", e);
+			log.error("Failed to decrypt data - Error={}", e.getMessage(), e);
 			throw new EncryptionException(e);
 		}
 	}
 
-	private String getKey() {
+	@VisibleForTesting
+	String getKey() {
 		int keyLength = key.length();
 		if (!acceptedKeyLengths.isEmpty()) {
 			Integer min = acceptedKeyLengths.stream().min(Integer::compareTo).orElse(0);

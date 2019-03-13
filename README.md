@@ -128,6 +128,27 @@ A [JPA AttributeConverter](https://www.baeldung.com/jpa-attribute-converters) ha
 - Encrypt all sensitive fields before storing them in the DB
 - Decrypt all sensitive fields after retrieving them from the DB
 
+### ObjectMother Pattern
+The [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) is a Factory class used only for Unit Tests, and it's
+really useful for avoiding duplicating code and to gain consistency across different classes under test. The main advantage
+of it is that we can avoid duplicate code and the final result is a cleaner code block. Example from ObjectMother implementations
+```
+@Test
+	public void testCreateMessageText() {
+		MessageCreationRequest messageCreationRequest = aTextMessageCreationRequest();
+		Message message = aCompleteTextMessageWithoutId();
+		Message messageWithId = aCompleteTextMessage();
+		MessageCreationResponse messageCreationResponse = aMessageCreationResponseEntity();
+		when(messageMapper.map(messageCreationRequest, Message.class)).thenReturn(message);
+		when(messageRepository.save(message)).thenReturn(messageWithId);
+		when(messageMapper.map(messageWithId, MessageCreationResponse.class)).thenReturn(messageCreationResponse);
+
+		MessageCreationResponse response = messageService.createMessage(messageCreationRequest);
+
+		assertThat(response).isEqualTo(messageCreationResponse);
+	}
+```
+
 ## Postman Collection
 A [Postman Collection](https://www.getpostman.com/) has been included in the repository, containing all the existing endpoints
 among with examples:
@@ -246,3 +267,8 @@ Example response payload:
 ## CI
 [Travis CI](https://travis-ci.org/) has been chosen as CI Software. It's already configured and runs all the UT for
 every PR and Build (including `master`). The status can be found at the top of this file.
+
+## More Stats
+The project includes a total of **103** Unit Tests. The total Coverage is **94%**, where all classes have **100%**
+coverage, except from `Application.java` (main Spring Boot Application class) and the ones from the Model itself (contain
+only *Getters*, *Setters*, *Constructors* and *Builder*).
